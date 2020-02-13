@@ -12,8 +12,8 @@ class ShellLauncher(SoftwareLauncher):
         TERMINAL_SOFTWARE = {
             "darwin": [
                 SoftwareVersion(
-                    "MacOS",
-                    "Terminal",
+                    " ",
+                    "Console",
                     "/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal",
                     icon=ICON_LOCATION,
                     args=None
@@ -28,8 +28,8 @@ class ShellLauncher(SoftwareLauncher):
             ],
             "win32": [
                 SoftwareVersion(
-                    "Windows",
-                    "Terminal",
+                    " ",
+                    "Console",
                     r"C:\WINDOWS\system32\cmd.exe",
                     icon=ICON_LOCATION,
                     args=None
@@ -37,8 +37,8 @@ class ShellLauncher(SoftwareLauncher):
             ],
             "linux2": [
                 SoftwareVersion(
-                    "Gnome",
-                    "Terminal",
+                    " ",
+                    "Console",
                     r"/usr/bin/gnome-terminal",
                     icon=ICON_LOCATION,
                     args=None
@@ -54,8 +54,8 @@ class ShellLauncher(SoftwareLauncher):
         # launch, and provide required command line args.
         # Return this information as a
         # LaunchInformation instance.
-        correct_executable_path = "python"
-        command_line_args = "{}".format(os.path.join(self.disk_location, "startup", "bootstrap.py"))
+        correct_executable_path = ""
+        command_line_args = "/k python -i {}".format(os.path.join(self.disk_location, "startup", "bootstrap.py"))
         # command_line_args = ""
         launch_environment = {}
 
@@ -66,6 +66,7 @@ class ShellLauncher(SoftwareLauncher):
         launch_environment["SGTK_ENGINE"] = self.engine_name
         launch_environment["SGTK_CONTEXT"] = sgtk.context.serialize(self.context)
         launch_environment["SGTK_TERMINAL"] = exec_path
+        launch_environment["SGTK_MODULE_PATH"] = sgtk.get_sgtk_module_path()
 
         # make sure to include some standard fields describing the current context and site
         std_env = self.get_standard_plugin_environment()
